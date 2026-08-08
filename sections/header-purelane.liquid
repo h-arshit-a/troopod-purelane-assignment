@@ -19,20 +19,21 @@
       </span>
     </a>
 
-    <!-- Desktop Navigation -->
+    <!-- Desktop Navigation (5 Exact Prototype Options) -->
     <nav class="nav" aria-label="Main navigation">
-      {%- if section.settings.menu != blank -%}
-        {%- for link in section.settings.menu.links -%}
+      {%- assign nav_menu = section.settings.menu -%}
+      {%- if nav_menu != blank and nav_menu.links.size >= 5 -%}
+        {%- for link in nav_menu.links -%}
           <a href="{{ link.url }}" class="{% if link.active %}on{% endif %}">
             {{ link.title | escape }}
           </a>
         {%- endfor -%}
       {%- else -%}
-        <a href="#top">Home</a>
-        <a href="#ingredients">Ingredients</a>
-        <a href="#how">How it works</a>
-        <a href="#shop">Shop</a>
-        <a href="#bundles">Bundles</a>
+        <a href="{{ routes.root_url }}#top" class="on">Home</a>
+        <a href="{{ routes.root_url }}#ingredients">Ingredients</a>
+        <a href="{{ routes.root_url }}#how">How it works</a>
+        <a href="{{ routes.root_url }}#shop">Shop</a>
+        <a href="{{ routes.root_url }}#bundles">Bundles</a>
       {%- endif -%}
     </nav>
 
@@ -47,14 +48,12 @@
       </a>
 
       <!-- Account Button -->
-      {%- if shop.customer_accounts_enabled -%}
-        <a href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}" class="ico hide-s" aria-label="Account">
-          <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.7" viewBox="0 0 24 24">
-            <circle cx="12" cy="8" r="3.6"></circle>
-            <path d="M5 20c0-3.6 3.1-5.6 7-5.6s7 2 7 5.6"></path>
-          </svg>
-        </a>
-      {%- endif -%}
+      <a href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}" class="ico hide-s" aria-label="Account">
+        <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.7" viewBox="0 0 24 24">
+          <circle cx="12" cy="8" r="3.6"></circle>
+          <path d="M5 20c0-3.6 3.1-5.6 7-5.6s7 2 7 5.6"></path>
+        </svg>
+      </a>
 
       <!-- Cart Button -->
       <a href="{{ routes.cart_url }}" class="ico" id="cart-icon-bubble" aria-label="Cart, {{ cart.item_count }} items">
@@ -85,8 +84,7 @@
     {
       "type": "link_list",
       "id": "menu",
-      "label": "Navigation Menu",
-      "default": "main-menu"
+      "label": "Navigation Menu"
     },
     {
       "type": "text",
