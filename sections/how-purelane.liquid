@@ -1,0 +1,182 @@
+{% comment %}
+  Purelane How / Pillars Section (#how)
+  1:1 Visual and content match with purelane-homepage.html prototype
+{% endcomment %}
+
+<section class="sec" data-scene="2" id="how">
+  <div class="wrap">
+    <div class="pillars">
+      {%- if section.blocks.size > 0 -%}
+        {%- for block in section.blocks -%}
+          {%- liquid
+            assign delay_idx = forloop.index0 | modulo: 3
+            assign delay_class = ''
+            if delay_idx == 1
+              assign delay_class = 'rv-d2'
+            elsif delay_idx == 2
+              assign delay_class = 'rv-d3'
+            endif
+          -%}
+          <article class="glass pillar rv {{ delay_class }}" {{ block.shopify_attributes }}>
+            <span class="pi">
+              {%- if block.settings.icon_type == 'scrub' -%}
+                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" viewBox="0 0 24 24">
+                  <circle cx="8" cy="8.5" r="3.2"></circle>
+                  <circle cx="16.4" cy="6.6" r="2.2"></circle>
+                  <circle cx="15" cy="13" r="2.8"></circle>
+                  <circle cx="8.6" cy="15.6" r="2.1"></circle>
+                  <path d="M4 21h16"></path>
+                </svg>
+              {%- elsif block.settings.icon_type == 'shield' -%}
+                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" viewBox="0 0 24 24">
+                  <path d="M12 3 4.5 6v6.2c0 4.3 3.1 7.6 7.5 8.8 4.4-1.2 7.5-4.5 7.5-8.8V6L12 3Z"></path>
+                  <path d="m9 12 2.2 2.2L15.4 10"></path>
+                </svg>
+              {%- else -%}
+                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" viewBox="0 0 24 24">
+                  <path d="M12 20s-7-4.4-7-9.4A4.1 4.1 0 0 1 12 8a4.1 4.1 0 0 1 7 2.6c0 5-7 9.4-7 9.4Z"></path>
+                </svg>
+              {%- endif -%}
+            </span>
+
+            <h3 class="d3">{{ block.settings.title | escape }}</h3>
+            <p class="body-s">{{ block.settings.text | escape }}</p>
+
+            {%- if block.settings.btn_label != blank -%}
+              <a href="{{ block.settings.btn_link | default: '#shop' }}" class="btn btn-ghost btn-sm">
+                {{ block.settings.btn_label | escape }}
+              </a>
+            {%- endif -%}
+          </article>
+        {%- endfor -%}
+      {%- else -%}
+        <!-- Default Prototype 3 Pillar Cards -->
+        <article class="glass pillar rv">
+          <span class="pi">
+            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" viewBox="0 0 24 24">
+              <circle cx="8" cy="8.5" r="3.2"></circle>
+              <circle cx="16.4" cy="6.6" r="2.2"></circle>
+              <circle cx="15" cy="13" r="2.8"></circle>
+              <circle cx="8.6" cy="15.6" r="2.1"></circle>
+              <path d="M4 21h16"></path>
+            </svg>
+          </span>
+          <h3 class="d3">Less scrubbing</h3>
+          <p class="body-s">A foaming formulation. The foam clings to grease and lifts it, so you wipe instead of scrub.</p>
+          <a class="btn btn-ghost btn-sm" href="#shop">Learn more</a>
+        </article>
+
+        <article class="glass pillar rv rv-d2">
+          <span class="pi">
+            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" viewBox="0 0 24 24">
+              <path d="M12 3 4.5 6v6.2c0 4.3 3.1 7.6 7.5 8.8 4.4-1.2 7.5-4.5 7.5-8.8V6L12 3Z"></path>
+              <path d="m9 12 2.2 2.2L15.4 10"></path>
+            </svg>
+          </span>
+          <h3 class="d3">Clean ingredients</h3>
+          <p class="body-s">No sulphates, no chlorine, no synthetic fragrance. Nothing on the label you would not want near your food.</p>
+          <a class="btn btn-ghost btn-sm" href="#ingredients">Learn more</a>
+        </article>
+
+        <article class="glass pillar rv rv-d3">
+          <span class="pi">
+            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" viewBox="0 0 24 24">
+              <path d="M12 20s-7-4.4-7-9.4A4.1 4.1 0 0 1 12 8a4.1 4.1 0 0 1 7 2.6c0 5-7 9.4-7 9.4Z"></path>
+            </svg>
+          </span>
+          <h3 class="d3">Safe around everyone</h3>
+          <p class="body-s">Gentle on hands, safe around kids and pets, and it leaves no toxic residue on the surfaces you touch every day.</p>
+          <a class="btn btn-ghost btn-sm" href="#proof">Learn more</a>
+        </article>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Purelane How / Pillars",
+  "tag": "section",
+  "class": "purelane-how-section",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "pillar_card",
+      "name": "Pillar Card",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon_type",
+          "label": "Icon Type",
+          "options": [
+            { "value": "scrub", "label": "Foam Bubbles SVG" },
+            { "value": "shield", "label": "Clean Shield SVG" },
+            { "value": "heart", "label": "Heart / Safe SVG" }
+          ],
+          "default": "scrub"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Pillar Title",
+          "default": "Less scrubbing"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Pillar Text",
+          "default": "A foaming formulation. The foam clings to grease and lifts it, so you wipe instead of scrub."
+        },
+        {
+          "type": "text",
+          "id": "btn_label",
+          "label": "Button Label",
+          "default": "Learn more"
+        },
+        {
+          "type": "url",
+          "id": "btn_link",
+          "label": "Button Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Purelane How / Pillars",
+      "blocks": [
+        {
+          "type": "pillar_card",
+          "settings": {
+            "icon_type": "scrub",
+            "title": "Less scrubbing",
+            "text": "A foaming formulation. The foam clings to grease and lifts it, so you wipe instead of scrub.",
+            "btn_label": "Learn more",
+            "btn_link": "#shop"
+          }
+        },
+        {
+          "type": "pillar_card",
+          "settings": {
+            "icon_type": "shield",
+            "title": "Clean ingredients",
+            "text": "No sulphates, no chlorine, no synthetic fragrance. Nothing on the label you would not want near your food.",
+            "btn_label": "Learn more",
+            "btn_link": "#ingredients"
+          }
+        },
+        {
+          "type": "pillar_card",
+          "settings": {
+            "icon_type": "heart",
+            "title": "Safe around everyone",
+            "text": "Gentle on hands, safe around kids and pets, and it leaves no toxic residue on the surfaces you touch every day.",
+            "btn_label": "Learn more",
+            "btn_link": "#proof"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

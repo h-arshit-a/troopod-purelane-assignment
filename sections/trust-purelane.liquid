@@ -1,0 +1,88 @@
+{% comment %}
+  Purelane Trust Banner Section
+  1:1 Visual and content match with purelane-homepage.html prototype
+{% endcomment %}
+
+<section class="sec" data-scene="4">
+  <div class="wrap">
+    <div class="glass trust rv">
+      <div class="trust-i">
+        <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24">
+          <path d="M12 21c0-6.5 3.5-11 8-12.5C20 15 16.5 20 12 21Z"></path>
+          <path d="M12 21C12 14.5 8.5 10 4 8.5 4 15 7.5 20 12 21Z"></path>
+        </svg>
+        <span>
+          {{ section.settings.badge_1_text | default: 'Plant derived<br>formulas' }}
+        </span>
+      </div>
+
+      <div class="trust-i">
+        <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24">
+          <path d="M4 8h16v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z"></path>
+          <path d="M4 8 6.5 3h11L20 8M9.5 12h5"></path>
+        </svg>
+        <span>
+          {{ section.settings.badge_2_text | default: 'Recyclable<br>packaging' }}
+        </span>
+      </div>
+
+      <div class="trust-i">
+        <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24">
+          <path d="M12 20s-7-4.4-7-9.4A4.1 4.1 0 0 1 12 8a4.1 4.1 0 0 1 7 2.6c0 5-7 9.4-7 9.4Z"></path>
+        </svg>
+        <span>
+          {{ section.settings.badge_3_text | default: 'Safe for<br>kids & pets' }}
+        </span>
+      </div>
+
+      <div class="trust-i">
+        <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="8.6"></circle>
+          <path d="M3.4 12h17.2M12 3.4c2.4 2.4 3.6 5.4 3.6 8.6S14.4 18.2 12 20.6c-2.4-2.4-3.6-5.4-3.6-8.6S9.6 5.8 12 3.4Z"></path>
+        </svg>
+        <span>
+          {{ section.settings.badge_4_text | default: 'Made in<br>India' }}
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Purelane Trust Banner",
+  "tag": "section",
+  "class": "purelane-trust-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "badge_1_text",
+      "label": "Badge 1 HTML Text",
+      "default": "Plant derived<br>formulas"
+    },
+    {
+      "type": "text",
+      "id": "badge_2_text",
+      "label": "Badge 2 HTML Text",
+      "default": "Recyclable<br>packaging"
+    },
+    {
+      "type": "text",
+      "id": "badge_3_text",
+      "label": "Badge 3 HTML Text",
+      "default": "Safe for<br>kids & pets"
+    },
+    {
+      "type": "text",
+      "id": "badge_4_text",
+      "label": "Badge 4 HTML Text",
+      "default": "Made in<br>India"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Purelane Trust Banner"
+    }
+  ]
+}
+{% endschema %}

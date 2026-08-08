@@ -1,0 +1,193 @@
+{% comment %}
+  Purelane Why Bundles Section (#whybundles)
+  1:1 Visual and content match with purelane-homepage.html prototype
+{% endcomment %}
+
+<section class="sec" data-scene="4" id="whybundles">
+  <div class="wrap">
+    <div class="glass sec-pad rv">
+      <div class="panel-head">
+        <span class="kicker">
+          {{ section.settings.eyebrow | default: 'The smarter way to shop' | escape }}
+        </span>
+        <h2 class="d2" style="margin-top:12px">
+          {{ section.settings.heading | default: 'Why bundles beat buying single' | escape }}
+        </h2>
+      </div>
+
+      <div class="wb">
+        {%- if section.blocks.size > 0 -%}
+          {%- for block in section.blocks -%}
+            <div class="wb-i" {{ block.shopify_attributes }}>
+              <span class="ci">
+                {%- if block.settings.icon_type == 'savings' -%}
+                  <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" viewBox="0 0 24 24">
+                    <path d="M12 3v18"></path>
+                    <path d="M16.5 7.2C15.6 6 14 5.4 12 5.4c-2.4 0-4 1.1-4 2.9 0 2 1.7 2.7 4.2 3.3 2.7.6 4.3 1.4 4.3 3.4 0 1.9-1.7 3.1-4.5 3.1-2.2 0-3.8-.7-4.8-2"></path>
+                  </svg>
+                {%- elsif block.settings.icon_type == 'price' -%}
+                  <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" viewBox="0 0 24 24">
+                    <rect x="4" y="4" width="16" height="16" rx="3.4"></rect>
+                    <path d="m8.4 12.2 2.4 2.4 4.8-5"></path>
+                  </svg>
+                {%- elsif block.settings.icon_type == 'curated' -%}
+                  <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" viewBox="0 0 24 24">
+                    <path d="m12 3.6 2.6 5.3 5.8.8-4.2 4.1 1 5.8-5.2-2.8-5.2 2.8 1-5.8L3.6 9.7l5.8-.8Z"></path>
+                  </svg>
+                {%- else -%}
+                  <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" viewBox="0 0 24 24">
+                    <path d="M2.6 16.4V7.2h10.2v9.2"></path>
+                    <path d="M12.8 10.4h4l3.6 3.2v2.8h-7.6"></path>
+                    <circle cx="6.6" cy="18" r="1.9"></circle>
+                    <circle cx="16.6" cy="18" r="1.9"></circle>
+                  </svg>
+                {%- endif -%}
+              </span>
+              <h4>{{ block.settings.title | escape }}</h4>
+              <p>{{ block.settings.text | escape }}</p>
+            </div>
+          {%- endfor -%}
+        {%- else -%}
+          <!-- Prototype Default 4 Benefit Cards -->
+          <div class="wb-i">
+            <span class="ci">
+              <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" viewBox="0 0 24 24">
+                <path d="M12 3v18"></path>
+                <path d="M16.5 7.2C15.6 6 14 5.4 12 5.4c-2.4 0-4 1.1-4 2.9 0 2 1.7 2.7 4.2 3.3 2.7.6 4.3 1.4 4.3 3.4 0 1.9-1.7 3.1-4.5 3.1-2.2 0-3.8-.7-4.8-2"></path>
+              </svg>
+            </span>
+            <h4>Save up to 45%</h4>
+            <p>Versus buying the same products separately</p>
+          </div>
+
+          <div class="wb-i">
+            <span class="ci">
+              <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" viewBox="0 0 24 24">
+                <rect x="4" y="4" width="16" height="16" rx="3.4"></rect>
+                <path d="m8.4 12.2 2.4 2.4 4.8-5"></path>
+              </svg>
+            </span>
+            <h4>One flat price</h4>
+            <p>No calculators, no comparing carts</p>
+          </div>
+
+          <div class="wb-i">
+            <span class="ci">
+              <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" viewBox="0 0 24 24">
+                <path d="m12 3.6 2.6 5.3 5.8.8-4.2 4.1 1 5.8-5.2-2.8-5.2 2.8 1-5.8L3.6 9.7l5.8-.8Z"></path>
+              </svg>
+            </span>
+            <h4>Curated by experts</h4>
+            <p>Products picked to work well together</p>
+          </div>
+
+          <div class="wb-i">
+            <span class="ci">
+              <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" viewBox="0 0 24 24">
+                <path d="M2.6 16.4V7.2h10.2v9.2"></path>
+                <path d="M12.8 10.4h4l3.6 3.2v2.8h-7.6"></path>
+                <circle cx="6.6" cy="18" r="1.9"></circle>
+                <circle cx="16.6" cy="18" r="1.9"></circle>
+              </svg>
+            </span>
+            <h4>Free shipping always</h4>
+            <p>Included on every bundle, all India</p>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Purelane Why Bundles",
+  "tag": "section",
+  "class": "purelane-whybundles-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow Text",
+      "default": "The smarter way to shop"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Section Heading",
+      "default": "Why bundles beat buying single"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "benefit_card",
+      "name": "Benefit Card",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon_type",
+          "label": "Icon Type",
+          "options": [
+            { "value": "savings", "label": "Dollar / Savings SVG" },
+            { "value": "price", "label": "Checkbox SVG" },
+            { "value": "curated", "label": "Star Badge SVG" },
+            { "value": "shipping", "label": "Delivery Truck SVG" }
+          ],
+          "default": "savings"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Benefit Title",
+          "default": "Save up to 45%"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Benefit Text",
+          "default": "Versus buying the same products separately"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Purelane Why Bundles",
+      "blocks": [
+        {
+          "type": "benefit_card",
+          "settings": {
+            "icon_type": "savings",
+            "title": "Save up to 45%",
+            "text": "Versus buying the same products separately"
+          }
+        },
+        {
+          "type": "benefit_card",
+          "settings": {
+            "icon_type": "price",
+            "title": "One flat price",
+            "text": "No calculators, no comparing carts"
+          }
+        },
+        {
+          "type": "benefit_card",
+          "settings": {
+            "icon_type": "curated",
+            "title": "Curated by experts",
+            "text": "Products picked to work well together"
+          }
+        },
+        {
+          "type": "benefit_card",
+          "settings": {
+            "icon_type": "shipping",
+            "title": "Free shipping always",
+            "text": "Included on every bundle, all India"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
