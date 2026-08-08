@@ -50,9 +50,70 @@
         "slide_3_compare_price": "₹897",
         "slide_3_cut": "Save ₹398"
       }
+    },
+    "bundles_purelane": {
+      "type": "bundles-purelane",
+      "blocks": {
+        "tier_1": {
+          "type": "bundle_tier",
+          "settings": {
+            "is_popular": false,
+            "tag": "Starter",
+            "product_count": "2",
+            "qty_label": "Products",
+            "price": "₹349",
+            "original_price": "₹598",
+            "per_product_text": "Flat ₹174 per product",
+            "bullets": "Pick any two products\nFree shipping across India",
+            "btn_label": "Build this box",
+            "btn_link": "#shop"
+          }
+        },
+        "tier_2": {
+          "type": "bundle_tier",
+          "settings": {
+            "is_popular": true,
+            "tag": "Most popular",
+            "product_count": "3",
+            "qty_label": "Products",
+            "price": "₹499",
+            "original_price": "₹897",
+            "per_product_text": "Flat ₹166 per product",
+            "bullets": "Pick any three products\nCovers kitchen and laundry\nFree shipping across India",
+            "btn_label": "Build this box",
+            "btn_link": "#shop"
+          }
+        },
+        "tier_3": {
+          "type": "bundle_tier",
+          "settings": {
+            "is_popular": false,
+            "tag": "Whole home",
+            "product_count": "5",
+            "qty_label": "Products",
+            "price": "₹799",
+            "original_price": "₹1495",
+            "per_product_text": "Flat ₹160 per product",
+            "bullets": "Pick any five products\nEvery room in one order\nFree shipping across India",
+            "btn_label": "Build this box",
+            "btn_link": "#shop"
+          }
+        }
+      },
+      "block_order": [
+        "tier_1",
+        "tier_2",
+        "tier_3"
+      ],
+      "settings": {
+        "eyebrow": "Build your bundle",
+        "heading": "One box. Every room.",
+        "subtitle": "Mix and match across kitchen, laundry, home and skin. One flat price, no code needed, free shipping either way."
+      }
     }
   },
   "order": [
-    "hero_purelane"
+    "hero_purelane",
+    "bundles_purelane"
   ]
 }
