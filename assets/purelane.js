@@ -303,8 +303,18 @@
         btnElement.innerHTML = 'Adding...';
       }
 
+      var parsedId = parseInt(variantId, 10);
+      if (isNaN(parsedId)) {
+        if (btnElement) {
+          btnElement.disabled = false;
+          btnElement.innerHTML = origText || 'Add to cart';
+        }
+        alert('Please assign a valid Shopify product in Theme Editor.');
+        return;
+      }
+
       var formData = {
-        items: [{ id: parseInt(variantId, 10), quantity: 1 }],
+        items: [{ id: parsedId, quantity: 1 }],
         sections: 'cart-drawer,cart-icon-bubble'
       };
 
@@ -319,7 +329,7 @@
       .then(function (res) {
         if (!res.ok) {
           return res.json().then(function (errData) {
-            throw new Error(errData.description || 'Could not add item to cart');
+            throw new Error(errData.description || errData.message || 'Could not add item to cart');
           });
         }
         return res.json();
@@ -369,7 +379,7 @@
           }, 2000);
         }
       })
-      .catch(function () {
+      .catch(function (err) {
         if (btnElement) {
           btnElement.disabled = false;
           btnElement.innerHTML = 'Error';
@@ -377,6 +387,7 @@
             btnElement.innerHTML = origText || 'Add to cart';
           }, 2000);
         }
+        console.error('Add to Cart Error:', err);
       });
     }
 
@@ -389,20 +400,23 @@
       var variantId = btn.getAttribute('data-variant-id') || btn.getAttribute('data-add-to-cart');
 
       var form = btn.closest('form');
-      if (!variantId && form && form.id && form.id.value) {
-        variantId = form.id.value;
+      if ((!variantId || variantId === 'blank') && form) {
+        var inputId = form.querySelector('input[name="id"]');
+        if (inputId && inputId.value) {
+          variantId = inputId.value;
+        }
       }
 
-      if (!variantId) {
-        // Fallback: fetch store products.json and add first available variant
-        fetch('/products.json?limit=1')
-          .then(function (res) { return res.json(); })
-          .then(function (data) {
-            if (data.products && data.products.length > 0 && data.products[0].variants.length > 0) {
-              executeAddToCart(data.products[0].variants[0].id, btn);
-            }
-          })
-          .catch(function () {});
+      // Fallback: search DOM for any valid data-variant-id attribute
+      if (!variantId || variantId === 'blank') {
+        var validBtn = document.querySelector('[data-variant-id]:not([data-variant-id=""]):not([data-variant-id="blank"])');
+        if (validBtn) {
+          variantId = validBtn.getAttribute('data-variant-id');
+        }
+      }
+
+      if (!variantId || variantId === 'blank') {
+        alert('Please assign a product to this block in Shopify Theme Editor.');
         return;
       }
 
@@ -418,6 +432,7 @@
         handleAddToCartClick({ target: btn || form, preventDefault: function () {} });
       }
     });
+
 
 
     // Trigger initial frame

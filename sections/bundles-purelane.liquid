@@ -32,7 +32,15 @@
             elsif forloop.index == 3
               assign delay_class = 'rv-d3'
             endif
+
+            assign bundle_prod = block.settings.product
+            if bundle_prod == blank and collections.all.products.size > 0
+              assign fallback_idx = forloop.index0 | default: 0 | modulo: collections.all.products.size
+              assign bundle_prod = collections.all.products[fallback_idx]
+            endif
+            assign active_variant_id = bundle_prod.selected_or_first_available_variant.id | default: bundle_prod.variants.first.id
           -%}
+
 
           <article
             class="glass tier {% if is_best %}best{% endif %} rv {{ delay_class }}"
@@ -106,9 +114,10 @@
             <button
               type="button"
               class="btn {% if is_best %}btn-primary{% else %}btn-ghost{% endif %} purelane-add-to-cart-btn"
-              data-variant-id="{{ block.settings.product.selected_or_first_available_variant.id }}"
+              data-variant-id="{{ active_variant_id }}"
               aria-label="Add {{ block.settings.tag | escape }} bundle to cart"
             >
+
               {{ block.settings.btn_label | default: 'Build this box' | escape }}
               {%- if is_best -%}
                 <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewBox="0 0 24 24">
