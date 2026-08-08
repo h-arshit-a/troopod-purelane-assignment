@@ -5,114 +5,172 @@
 
 <section class="sec" data-scene="2" id="ingredients">
   <div class="wrap">
-    <div class="glass sec-pad rv" style="margin-bottom:16px">
-      <div class="panel-head" style="margin-bottom:0">
-        <span class="kicker">
-          {{ section.settings.eyebrow | default: 'Clean without compromise' | escape }}
-        </span>
-        <h2 class="d2" style="margin-top:12px">
-          {{ section.settings.heading | default: 'Sourced from nature' | escape }}
-        </h2>
-        <p class="lede" style="margin:0 auto">
-          {{ section.settings.subtitle | default: 'Plant-derived surfactants and essential oils that cut grime fast, without leaving harsh chemical traces on your counters or plates.' | escape }}
-        </p>
+    <div class="glass sec-pad rv">
+      <div class="panel-head">
+        <h2 class="d2">{{ section.settings.heading | default: 'Sourced from nature' | escape }}</h2>
+        <div class="rule">
+          <i></i>
+          <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" viewBox="0 0 24 24">
+            <path d="M12 21c0-6.5 3.5-11 8-12.5C20 15 16.5 20 12 21Z"></path>
+            <path d="M12 21C12 14.5 8.5 10 4 8.5 4 15 7.5 20 12 21Z"></path>
+          </svg>
+          <i></i>
+        </div>
       </div>
-    </div>
 
-    <div class="grid-4">
-      {%- if section.blocks.size > 0 -%}
-        {%- for block in section.blocks -%}
-          {%- liquid
-            assign delay_idx = forloop.index0 | modulo: 4
-            assign delay_class = ''
-            if delay_idx == 1
-              assign delay_class = 'rv-d1'
-            elsif delay_idx == 2
-              assign delay_class = 'rv-d2'
-            elsif delay_idx == 3
-              assign delay_class = 'rv-d3'
-            endif
-          -%}
-          <div class="glass ing-c rv {{ delay_class }}" {{ block.shopify_attributes }}>
-            <div class="ii">
-              {%- if block.settings.icon_type == 'dish' -%}
-                <span class="pimg p-dish" role="img" aria-label="{{ block.settings.title | escape }}"></span>
-              {%- elsif block.settings.icon_type == 'enzyme' -%}
-                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" viewBox="0 0 24 24">
-                  <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
-                </svg>
-              {%- elsif block.settings.icon_type == 'neem' -%}
-                <svg fill="none" stroke="#68d986" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" viewBox="0 0 24 24">
-                  <path d="M12 21c0-6.5 3.5-11 8-12.5C20 15 16.5 20 12 21Z"></path>
-                  <path d="M12 21C12 14.5 8.5 10 4 8.5 4 15 7.5 20 12 21Z"></path>
-                </svg>
-              {%- elsif block.settings.icon_type == 'lemongrass' -%}
-                <svg viewBox="0 0 100 100" fill="none">
-                  <g stroke="#68d986" stroke-linecap="round" stroke-width="2.2">
-                    <path d="M50 88C48 58 46 36 34 6c8 26 12 47 16 76Z"></path>
-                    <path d="M52 88C50 60 50 39 44 9c11 29 13 50 12 79Z"></path>
-                    <path d="M54 88C56 60 60 40 74 13c-11 28-15 48-16 75Z"></path>
-                    <path d="M56 88C60 64 68 48 86 27c-14 22-21 38-26 61Z"></path>
-                    <path d="M48 88C44 66 36 50 18 30c14 21 22 36 27 58Z"></path>
-                  </g>
-                  <path d="M50 88h6" stroke="#f0a03c" stroke-linecap="round" stroke-width="2.4"></path>
-                </svg>
-              {%- else -%}
-                <span class="pimg p-dish" role="img" aria-label="{{ block.settings.title | escape }}"></span>
-              {%- endif -%}
+      <div class="ing">
+        {%- if section.blocks.size > 0 -%}
+          {%- for block in section.blocks -%}
+            <div class="ing-i" {{ block.shopify_attributes }}>
+              <div class="art">
+                {%- if block.settings.custom_svg != blank -%}
+                  {{ block.settings.custom_svg }}
+                {%- else -%}
+                  {%- case block.settings.ingredient_type -%}
+                    {%- when 'coconut' -%}
+                      <svg fill="none" stroke="#ece6f7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 100 100">
+                        <circle cx="50" cy="62" r="25"></circle>
+                        <path d="M31 53c9-6 29-6 38 0" stroke="#f0a03c"></path>
+                        <path d="M41 63c4 8 14 8 18 0" opacity=".55"></path>
+                        <path d="M50 37V25"></path>
+                        <path d="M50 27C42 18 30 16 21 21c5 10 17 13 29 6Z" stroke="#f0a03c"></path>
+                        <path d="M50 27c8-9 20-11 29-6-5 10-17 13-29 6Z" stroke="#f0a03c"></path>
+                      </svg>
+                    {%- when 'orange' -%}
+                      <svg fill="none" stroke="#ece6f7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 100 100">
+                        <circle cx="45" cy="58" r="23"></circle>
+                        <path d="M45 35v46M22 58h46" opacity=".4"></path>
+                        <path d="M29 42 61 74M61 42 29 74" opacity=".26"></path>
+                        <path d="M62 28c13-1 20 10 15 20-4 8-15 9-19 2" stroke="#f0a03c"></path>
+                        <path d="M45 34c-3-8 2-15 10-16 1 9-3 15-10 16Z" stroke="#f0a03c"></path>
+                      </svg>
+                    {%- when 'soapnut' -%}
+                      <svg fill="none" stroke="#ece6f7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 100 100">
+                        <circle cx="36" cy="66" r="16"></circle>
+                        <circle cx="64" cy="69" r="14"></circle>
+                        <circle cx="50" cy="43" r="14"></circle>
+                        <path d="M50 29V17"></path>
+                        <path d="M50 21c-8-8-18-8-23-2 7 8 17 10 23 2Z" stroke="#f0a03c"></path>
+                        <path d="M31 60a5 5 0 0 1 4-4" opacity=".6"></path>
+                        <path d="M46 38a5 5 0 0 1 4-4" opacity=".6"></path>
+                      </svg>
+                    {%- when 'neem' -%}
+                      <svg fill="none" stroke="#ece6f7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 100 100">
+                        <path d="M18 82C36 66 58 44 82 20" stroke="#f0a03c"></path>
+                        <path d="M27 73c-6-7-4-15 3-18 4 7 3 14-3 18Z"></path>
+                        <path d="M31 69c8-4 15 0 16 8-8 2-14-1-16-8Z"></path>
+                        <path d="M41 59c-6-7-4-16 3-19 4 7 3 15-3 19Z"></path>
+                        <path d="M45 55c9-4 16 0 17 8-8 2-15-1-17-8Z"></path>
+                        <path d="M56 44c-6-7-4-16 3-19 4 7 3 15-3 19Z"></path>
+                        <path d="M60 40c9-4 16 0 17 8-8 2-15-1-17-8Z"></path>
+                        <path d="M70 30c-5-7-3-15 4-18 3 7 2 14-4 18Z"></path>
+                      </svg>
+                    {%- when 'lemongrass' -%}
+                      <svg fill="none" viewBox="0 0 100 100">
+                        <g fill="#ece6f7" opacity=".88">
+                          <path d="M50 88C44 62 39 42 24 15c15 27 22 47 29 73Z"></path>
+                          <path d="M52 88C50 60 50 39 44 9c11 29 13 50 12 79Z"></path>
+                          <path d="M54 88C56 60 60 40 74 13c-11 28-15 48-16 75Z"></path>
+                          <path d="M56 88C60 64 68 48 86 27c-14 22-21 38-26 61Z"></path>
+                          <path d="M48 88C44 66 36 50 18 30c14 21 22 36 27 58Z"></path>
+                        </g>
+                        <path d="M50 88h6" stroke="#f0a03c" stroke-linecap="round" stroke-width="2.4"></path>
+                      </svg>
+                    {%- else -%}
+                      <svg fill="none" stroke="#ece6f7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 100 100">
+                        <circle cx="50" cy="62" r="25"></circle>
+                        <path d="M31 53c9-6 29-6 38 0" stroke="#f0a03c"></path>
+                        <path d="M41 63c4 8 14 8 18 0" opacity=".55"></path>
+                      </svg>
+                  {%- endcase -%}
+                {%- endif -%}
+              </div>
+              <h4>{{ block.settings.title | escape }}</h4>
+              <p>{{ block.settings.description | escape }}</p>
             </div>
-            <h4>{{ block.settings.title | escape }}</h4>
-            <p>{{ block.settings.description | escape }}</p>
+          {%- endfor -%}
+        {%- else -%}
+          <!-- Default Prototype 5 Ingredients -->
+          <div class="ing-i">
+            <div class="art">
+              <svg fill="none" stroke="#ece6f7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 100 100">
+                <circle cx="50" cy="62" r="25"></circle>
+                <path d="M31 53c9-6 29-6 38 0" stroke="#f0a03c"></path>
+                <path d="M41 63c4 8 14 8 18 0" opacity=".55"></path>
+                <path d="M50 37V25"></path>
+                <path d="M50 27C42 18 30 16 21 21c5 10 17 13 29 6Z" stroke="#f0a03c"></path>
+                <path d="M50 27c8-9 20-11 29-6-5 10-17 13-29 6Z" stroke="#f0a03c"></path>
+              </svg>
+            </div>
+            <h4>Coconut</h4>
+            <p>Plant-derived cleansers that lift grease</p>
           </div>
-        {%- endfor -%}
-      {%- else -%}
-        <!-- Default Prototype 4 Ingredient Cards -->
-        <div class="glass ing-c rv">
-          <div class="ii">
-            <span class="pimg p-dish" role="img" aria-label="Coconut Surfactants"></span>
-          </div>
-          <h4>Coconut surfactants</h4>
-          <p>Lifts grease and grime without stripping skin or damaging surfaces</p>
-        </div>
 
-        <div class="glass ing-c rv rv-d1">
-          <div class="ii">
-            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" viewBox="0 0 24 24">
-              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
-            </svg>
+          <div class="ing-i">
+            <div class="art">
+              <svg fill="none" stroke="#ece6f7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 100 100">
+                <circle cx="45" cy="58" r="23"></circle>
+                <path d="M45 35v46M22 58h46" opacity=".4"></path>
+                <path d="M29 42 61 74M61 42 29 74" opacity=".26"></path>
+                <path d="M62 28c13-1 20 10 15 20-4 8-15 9-19 2" stroke="#f0a03c"></path>
+                <path d="M45 34c-3-8 2-15 10-16 1 9-3 15-10 16Z" stroke="#f0a03c"></path>
+              </svg>
+            </div>
+            <h4>Orange peel</h4>
+            <p>Natural degreaser and fresh citrus lift</p>
           </div>
-          <h4>Bio enzymes</h4>
-          <p>Breaks down organic stains and food residues naturally</p>
-        </div>
 
-        <div class="glass ing-c rv rv-d2">
-          <div class="ii">
-            <svg fill="none" stroke="#68d986" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" viewBox="0 0 24 24">
-              <path d="M12 21c0-6.5 3.5-11 8-12.5C20 15 16.5 20 12 21Z"></path>
-              <path d="M12 21C12 14.5 8.5 10 4 8.5 4 15 7.5 20 12 21Z"></path>
-            </svg>
+          <div class="ing-i">
+            <div class="art">
+              <svg fill="none" stroke="#ece6f7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 100 100">
+                <circle cx="36" cy="66" r="16"></circle>
+                <circle cx="64" cy="69" r="14"></circle>
+                <circle cx="50" cy="43" r="14"></circle>
+                <path d="M50 29V17"></path>
+                <path d="M50 21c-8-8-18-8-23-2 7 8 17 10 23 2Z" stroke="#f0a03c"></path>
+                <path d="M31 60a5 5 0 0 1 4-4" opacity=".6"></path>
+                <path d="M46 38a5 5 0 0 1 4-4" opacity=".6"></path>
+              </svg>
+            </div>
+            <h4>Soap nut</h4>
+            <p>A traditional plant foaming agent</p>
           </div>
-          <h4>Neem extract</h4>
-          <p>Time-tested antibacterial protection for floors and counters</p>
-        </div>
 
-        <div class="glass ing-c rv rv-d3">
-          <div class="ii">
-            <svg viewBox="0 0 100 100" fill="none">
-              <g stroke="#68d986" stroke-linecap="round" stroke-width="2.2">
-                <path d="M50 88C48 58 46 36 34 6c8 26 12 47 16 76Z"></path>
-                <path d="M52 88C50 60 50 39 44 9c11 29 13 50 12 79Z"></path>
-                <path d="M54 88C56 60 60 40 74 13c-11 28-15 48-16 75Z"></path>
-                <path d="M56 88C60 64 68 48 86 27c-14 22-21 38-26 61Z"></path>
-                <path d="M48 88C44 66 36 50 18 30c14 21 22 36 27 58Z"></path>
-              </g>
-              <path d="M50 88h6" stroke="#f0a03c" stroke-linecap="round" stroke-width="2.4"></path>
-            </svg>
+          <div class="ing-i">
+            <div class="art">
+              <svg fill="none" stroke="#ece6f7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 100 100">
+                <path d="M18 82C36 66 58 44 82 20" stroke="#f0a03c"></path>
+                <path d="M27 73c-6-7-4-15 3-18 4 7 3 14-3 18Z"></path>
+                <path d="M31 69c8-4 15 0 16 8-8 2-14-1-16-8Z"></path>
+                <path d="M41 59c-6-7-4-16 3-19 4 7 3 15-3 19Z"></path>
+                <path d="M45 55c9-4 16 0 17 8-8 2-15-1-17-8Z"></path>
+                <path d="M56 44c-6-7-4-16 3-19 4 7 3 15-3 19Z"></path>
+                <path d="M60 40c9-4 16 0 17 8-8 2-15-1-17-8Z"></path>
+                <path d="M70 30c-5-7-3-15 4-18 3 7 2 14-4 18Z"></path>
+              </svg>
+            </div>
+            <h4>Neem</h4>
+            <p>Time-tested antibacterial from the tree</p>
           </div>
-          <h4>Lemongrass</h4>
-          <p>Clean fragrance with nothing synthetic or overpowering</p>
-        </div>
-      {%- endif -%}
+
+          <div class="ing-i">
+            <div class="art">
+              <svg fill="none" viewBox="0 0 100 100">
+                <g fill="#ece6f7" opacity=".88">
+                  <path d="M50 88C44 62 39 42 24 15c15 27 22 47 29 73Z"></path>
+                  <path d="M52 88C50 60 50 39 44 9c11 29 13 50 12 79Z"></path>
+                  <path d="M54 88C56 60 60 40 74 13c-11 28-15 48-16 75Z"></path>
+                  <path d="M56 88C60 64 68 48 86 27c-14 22-21 38-26 61Z"></path>
+                  <path d="M48 88C44 66 36 50 18 30c14 21 22 36 27 58Z"></path>
+                </g>
+                <path d="M50 88h6" stroke="#f0a03c" stroke-linecap="round" stroke-width="2.4"></path>
+              </svg>
+            </div>
+            <h4>Lemongrass</h4>
+            <p>Clean fragrance with nothing synthetic</p>
+          </div>
+        {%- endif -%}
+      </div>
     </div>
   </div>
 </section>
@@ -125,92 +183,52 @@
   "settings": [
     {
       "type": "text",
-      "id": "eyebrow",
-      "label": "Eyebrow Text",
-      "default": "Clean without compromise"
-    },
-    {
-      "type": "text",
       "id": "heading",
       "label": "Section Heading",
       "default": "Sourced from nature"
-    },
-    {
-      "type": "textarea",
-      "id": "subtitle",
-      "label": "Section Subtitle",
-      "default": "Plant-derived surfactants and essential oils that cut grime fast, without leaving harsh chemical traces on your counters or plates."
     }
   ],
   "blocks": [
     {
-      "type": "ingredient_card",
-      "name": "Ingredient Card",
+      "type": "ingredient",
+      "name": "Ingredient Item",
       "settings": [
-        {
-          "type": "select",
-          "id": "icon_type",
-          "label": "Icon Type",
-          "options": [
-            { "value": "dish", "label": "Coconut / Bottle Image" },
-            { "value": "enzyme", "label": "Bio Enzyme SVG" },
-            { "value": "neem", "label": "Neem Leaf SVG" },
-            { "value": "lemongrass", "label": "Lemongrass SVG" }
-          ],
-          "default": "dish"
-        },
         {
           "type": "text",
           "id": "title",
-          "label": "Ingredient Name",
-          "default": "Coconut surfactants"
+          "label": "Ingredient Title",
+          "default": "Coconut"
         },
         {
           "type": "textarea",
           "id": "description",
-          "label": "Description",
-          "default": "Lifts grease and grime without stripping skin or damaging surfaces"
+          "label": "Ingredient Description",
+          "default": "Plant-derived cleansers that lift grease"
+        },
+        {
+          "type": "select",
+          "id": "ingredient_type",
+          "label": "Icon Preset",
+          "options": [
+            { "value": "coconut", "label": "Coconut" },
+            { "value": "orange", "label": "Orange Peel" },
+            { "value": "soapnut", "label": "Soap Nut" },
+            { "value": "neem", "label": "Neem" },
+            { "value": "lemongrass", "label": "Lemongrass" }
+          ],
+          "default": "coconut"
+        },
+        {
+          "type": "html",
+          "id": "custom_svg",
+          "label": "Custom SVG Code (Optional)"
         }
       ]
     }
   ],
   "presets": [
     {
-      "name": "Purelane Ingredients",
-      "blocks": [
-        {
-          "type": "ingredient_card",
-          "settings": {
-            "icon_type": "dish",
-            "title": "Coconut surfactants",
-            "description": "Lifts grease and grime without stripping skin or damaging surfaces"
-          }
-        },
-        {
-          "type": "ingredient_card",
-          "settings": {
-            "icon_type": "enzyme",
-            "title": "Bio enzymes",
-            "description": "Breaks down organic stains and food residues naturally"
-          }
-        },
-        {
-          "type": "ingredient_card",
-          "settings": {
-            "icon_type": "neem",
-            "title": "Neem extract",
-            "description": "Time-tested antibacterial protection for floors and counters"
-          }
-        },
-        {
-          "type": "ingredient_card",
-          "settings": {
-            "icon_type": "lemongrass",
-            "title": "Lemongrass",
-            "description": "Clean fragrance with nothing synthetic or overpowering"
-          }
-        }
-      ]
+      "name": "Purelane Ingredients"
     }
   ]
 }

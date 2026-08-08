@@ -50,6 +50,114 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 .kicker{font-size:11px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--paper-3)}
 .wrap{max-width:var(--maxw);margin:0 auto;padding:0 18px}
 
+/* ---------- STICKY CTA BAR ---------- */
+.sticky {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 99;
+  padding: 12px 18px calc(12px + env(safe-area-inset-bottom));
+  background: rgba(23, 16, 43, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(236, 230, 247, 0.18);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.25);
+}
+.sticky .lbl {
+  line-height: 1.2;
+}
+.sticky .lbl b {
+  display: block;
+  font-family: 'Outfit', sans-serif;
+  font-size: 13.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #faf7fd;
+}
+.sticky .lbl span {
+  font-size: 11px;
+  color: rgba(236, 230, 247, 0.65);
+}
+.sticky .btn {
+  margin-left: auto;
+  padding: 10px 22px;
+  font-size: 13px;
+  border-radius: 999px;
+  background: #01423b;
+  color: #ffffff;
+}
+
+/* ---------- INGREDIENTS STRIP 1:1 STYLES ---------- */
+.ing {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 20px;
+  margin-top: 24px;
+}
+@media (min-width: 640px) {
+  .ing {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (min-width: 1024px) {
+  .ing {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+.ing-i {
+  text-align: center;
+  padding: 16px 12px;
+}
+.ing-i .art {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 12px;
+  display: grid;
+  place-items: center;
+}
+.ing-i .art svg {
+  width: 58px;
+  height: 58px;
+}
+.ing-i h4 {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--surface, #faf7fd);
+  margin-bottom: 6px;
+}
+.ing-i p {
+  font-size: 12.5px;
+  line-height: 1.4;
+  color: var(--paper-2, rgba(236, 230, 247, 0.74));
+}
+.rule {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 10px;
+}
+.rule i {
+  height: 1px;
+  width: 48px;
+  background: rgba(236, 230, 247, 0.22);
+}
+.rule svg {
+  width: 18px;
+  height: 18px;
+  color: #b8701c;
+}
+
+
+
 /* ---------- SCENES: plain brand green, depth by scroll ---------- */
 .scenes{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;background:var(--brand)}
 .scene{position:absolute;inset:0;opacity:0;transition:opacity 1.5s ease}
