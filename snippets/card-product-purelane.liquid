@@ -5,6 +5,12 @@
 
 {%- liquid
   assign card_product = product_card_product
+  if card_product == blank and collections.all.products.size > 0
+    assign fallback_idx = card_index | default: 0 | modulo: collections.all.products.size
+    assign card_product = collections.all.products[fallback_idx]
+  endif
+
+  assign active_variant = card_product.selected_or_first_available_variant
   assign delay_class = card_delay_class | default: ''
   
   assign badge_text = card_badge | default: ''
@@ -27,6 +33,7 @@
     assign categories_string = tags_joined
   endif
 -%}
+
 
 <article
   class="glass card rv {{ delay_class }}"
@@ -105,16 +112,16 @@
     {%- endif -%}
   </div>
 
-  {%- if card_product != blank -%}
-    {%- if card_product.available -%}
+  {%- if active_variant != blank -%}
+    {%- if card_product.available != false -%}
       <product-form class="product-form">
         {%- form 'product', card_product, id: card_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
-          <input type="hidden" name="id" value="{{ card_product.selected_or_first_available_variant.id }}">
+          <input type="hidden" name="id" value="{{ active_variant.id }}">
           <button
             type="submit"
             name="add"
             class="btn btn-ghost btn-sm purelane-add-to-cart-btn"
-            data-variant-id="{{ card_product.selected_or_first_available_variant.id }}"
+            data-variant-id="{{ active_variant.id }}"
             aria-label="Add {{ card_product.title | escape }} to cart"
           >
             Add to cart
@@ -128,11 +135,12 @@
     {%- endif -%}
   {%- else -%}
     <form action="/cart/add" method="post" enctype="multipart/form-data" class="form" data-type="add-to-cart-form">
-      <input type="hidden" name="id" value="">
+      <input type="hidden" name="id" value="{{ card_product.selected_or_first_available_variant.id }}">
       <button
         type="submit"
         name="add"
         class="btn btn-ghost btn-sm purelane-add-to-cart-btn"
+        data-variant-id="{{ card_product.selected_or_first_available_variant.id }}"
         aria-label="Add {{ card_title | default: 'Purelane Product' | escape }} to cart"
       >
         Add to cart
@@ -140,4 +148,5 @@
     </form>
   {%- endif -%}
 </article>
+
 

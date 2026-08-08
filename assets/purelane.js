@@ -316,14 +316,21 @@
         },
         body: JSON.stringify(formData)
       })
-      .then(function (res) { return res.json(); })
+      .then(function (res) {
+        if (!res.ok) {
+          return res.json().then(function (errData) {
+            throw new Error(errData.description || 'Could not add item to cart');
+          });
+        }
+        return res.json();
+      })
       .then(function (data) {
         updateCartBadge();
 
-        // Update Dawn Cart Drawer DOM if sections HTML returned
-        if (data.sections && data.sections['cart-drawer']) {
-          var cartDrawerEl = document.querySelector('cart-drawer');
-          if (cartDrawerEl) {
+        var cartDrawerEl = document.querySelector('cart-drawer');
+        if (cartDrawerEl) {
+          cartDrawerEl.classList.remove('is-empty');
+          if (data.sections && data.sections['cart-drawer']) {
             var parsedHtml = new DOMParser().parseFromString(data.sections['cart-drawer'], 'text/html');
             var innerHtml = parsedHtml.querySelector('.drawer__inner');
             if (innerHtml && cartDrawerEl.querySelector('.drawer__inner')) {
@@ -332,12 +339,26 @@
           }
         }
 
-        // Open Dawn Cart Drawer
-        var cartDrawer = document.querySelector('cart-drawer');
-        if (cartDrawer && typeof cartDrawer.open === 'function') {
-          cartDrawer.open();
-        } else if (cartDrawer) {
-          cartDrawer.classList.add('active');
+        if (data.sections && data.sections['cart-icon-bubble']) {
+          var iconBubble = document.getElementById('cart-icon-bubble');
+          if (iconBubble) {
+            var parsedIcon = new DOMParser().parseFromString(data.sections['cart-icon-bubble'], 'text/html');
+            if (parsedIcon.body.firstElementChild) {
+              var countBadge = parsedIcon.querySelector('.cart-count-bubble');
+              if (countBadge) {
+                var dotBadge = iconBubble.querySelector('.dot');
+                if (dotBadge) dotBadge.textContent = countBadge.textContent.trim();
+              }
+            }
+          }
+        }
+
+        document.dispatchEvent(new CustomEvent('cart:updated', { detail: { cart: data } }));
+
+        if (cartDrawerEl && typeof cartDrawerEl.open === 'function') {
+          cartDrawerEl.open();
+        } else if (cartDrawerEl) {
+          cartDrawerEl.classList.add('active');
         }
 
         if (btnElement) {
@@ -351,10 +372,14 @@
       .catch(function () {
         if (btnElement) {
           btnElement.disabled = false;
-          btnElement.innerHTML = origText || 'Add to cart';
+          btnElement.innerHTML = 'Error';
+          setTimeout(function () {
+            btnElement.innerHTML = origText || 'Add to cart';
+          }, 2000);
         }
       });
     }
+
 
     function handleAddToCartClick(e) {
       var btn = e.target ? e.target.closest('.purelane-add-to-cart-btn, [data-add-to-cart], button[name="add"]') : null;
