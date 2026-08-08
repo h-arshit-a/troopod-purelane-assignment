@@ -226,11 +226,132 @@
         "heading": "One box. Every room.",
         "subtitle": "Mix and match across kitchen, laundry, home and skin. One flat price, no code needed, free shipping either way."
       }
+    },
+    "shop_purelane": {
+      "type": "shop-grid",
+      "blocks": {
+        "prod_1": {
+          "type": "product_card",
+          "settings": {
+            "title": "Tap cleaner & limescale remover",
+            "badge": "Best seller",
+            "category": "bathroom kitchen",
+            "rating": "4.8",
+            "reviews_count": "237",
+            "price": "₹200",
+            "compare_price": "₹299",
+            "discount_tag": "33% off"
+          }
+        },
+        "prod_2": {
+          "type": "product_card",
+          "settings": {
+            "title": "Kitchen cleaner, foaming",
+            "badge": "Best seller",
+            "category": "kitchen",
+            "rating": "4.8",
+            "reviews_count": "254",
+            "price": "₹200",
+            "compare_price": "₹299",
+            "discount_tag": "33% off"
+          }
+        },
+        "prod_3": {
+          "type": "product_card",
+          "settings": {
+            "title": "Copper, bronze & brass cleaner",
+            "badge": "Top rated",
+            "category": "kitchen",
+            "rating": "4.8",
+            "reviews_count": "231",
+            "price": "₹200",
+            "compare_price": "₹299",
+            "discount_tag": "33% off"
+          }
+        },
+        "prod_4": {
+          "type": "product_card",
+          "settings": {
+            "title": "Washing machine cleaner & descaler (Concentrated Formula for Front & Top Loaders)",
+            "badge": "New",
+            "category": "laundry",
+            "rating": "4.8",
+            "reviews_count": "183",
+            "price": "₹200",
+            "compare_price": "₹299",
+            "discount_tag": "33% off"
+          }
+        },
+        "prod_5": {
+          "type": "product_card",
+          "settings": {
+            "title": "Natural toilet bowl cleaner gel",
+            "badge": "Sold out",
+            "category": "bathroom",
+            "rating": "4.8",
+            "reviews_count": "237",
+            "price": "₹180",
+            "compare_price": "₹249"
+          }
+        },
+        "prod_6": {
+          "type": "product_card",
+          "settings": {
+            "title": "Ultra-gentle plant dishwash gel",
+            "badge": "Top rated",
+            "category": "kitchen",
+            "rating": "4.8",
+            "reviews_count": "254",
+            "price": "₹220",
+            "compare_price": "₹299"
+          }
+        },
+        "prod_7": {
+          "type": "product_card",
+          "settings": {
+            "title": "Natural laundry detergent liquid",
+            "badge": "Top rated",
+            "category": "laundry",
+            "rating": "4.8",
+            "reviews_count": "231",
+            "price": "₹350",
+            "compare_price": "₹450"
+          }
+        },
+        "prod_8": {
+          "type": "product_card",
+          "settings": {
+            "title": "Botanical handwash gel",
+            "badge": "New",
+            "category": "bathroom floor",
+            "rating": "4.8",
+            "reviews_count": "190",
+            "price": "₹190",
+            "compare_price": "₹250"
+          }
+        }
+      },
+      "block_order": [
+        "prod_1",
+        "prod_2",
+        "prod_3",
+        "prod_4",
+        "prod_5",
+        "prod_6",
+        "prod_7",
+        "prod_8"
+      ],
+      "settings": {
+        "eyebrow": "Bestsellers",
+        "heading": "Loved by 30,000 homes",
+        "products_to_show": 8
+      }
     }
   },
   "order": [
     "hero_purelane",
     "combos_purelane",
-    "bundles_purelane"
+    "bundles_purelane",
+    "shop_purelane"
   ]
 }

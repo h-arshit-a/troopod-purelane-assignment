@@ -1,0 +1,364 @@
+{% comment %}
+  Purelane Shop / Product Grid Section (#shop)
+  1:1 Visual and functional match with purelane-homepage.html prototype
+{% endcomment %}
+
+<section class="sec" data-scene="3" id="shop">
+  <div class="wrap">
+    <!-- Header Box -->
+    <div class="glass sec-pad rv" style="margin-bottom:16px">
+      <div class="panel-head" style="margin-bottom:0">
+        <span class="kicker">
+          {{ section.settings.eyebrow | default: 'Bestsellers' | escape }}
+        </span>
+        <h2 class="d2" style="margin-top:12px">
+          {{ section.settings.heading | default: 'Loved by 30,000 homes' | escape }}
+        </h2>
+      </div>
+    </div>
+
+    <!-- Category Tabs Filter -->
+    <div class="tabs rv" role="tablist" aria-label="Product categories">
+      <button type="button" class="tab on" role="tab" aria-selected="true" data-category-tab="all">
+        All
+      </button>
+      <button type="button" class="tab" role="tab" aria-selected="false" data-category-tab="kitchen">
+        Kitchen
+      </button>
+      <button type="button" class="tab" role="tab" aria-selected="false" data-category-tab="bathroom">
+        Bathroom
+      </button>
+      <button type="button" class="tab" role="tab" aria-selected="false" data-category-tab="laundry">
+        Laundry
+      </button>
+      <button type="button" class="tab" role="tab" aria-selected="false" data-category-tab="floor">
+        Floor
+      </button>
+    </div>
+
+    <!-- Responsive 4-Column Product Grid -->
+    <div class="grid-4" id="PurelaneProductGrid-{{ section.id }}">
+      {%- assign selected_collection = collections[section.settings.collection] -%}
+
+      {%- if selected_collection != blank and selected_collection.products_count > 0 -%}
+        {%- for product in selected_collection.products limit: section.settings.products_to_show -%}
+          {%- liquid
+            assign delay_idx = forloop.index0 | modulo: 4
+            assign delay_class = ''
+            if delay_idx == 1
+              assign delay_class = 'rv-d1'
+            elsif delay_idx == 2
+              assign delay_class = 'rv-d2'
+            elsif delay_idx == 3
+              assign delay_class = 'rv-d3'
+            endif
+          -%}
+          {% render 'card-product-purelane',
+            product_card_product: product,
+            card_delay_class: delay_class
+          %}
+        {%- endfor -%}
+      {%- elsif section.blocks.size > 0 -%}
+        {%- for block in section.blocks -%}
+          {%- liquid
+            assign delay_idx = forloop.index0 | modulo: 4
+            assign delay_class = ''
+            if delay_idx == 1
+              assign delay_class = 'rv-d1'
+            elsif delay_idx == 2
+              assign delay_class = 'rv-d2'
+            elsif delay_idx == 3
+              assign delay_class = 'rv-d3'
+            endif
+          -%}
+          {% render 'card-product-purelane',
+            product_card_product: block.settings.product,
+            card_title: block.settings.title,
+            card_badge: block.settings.badge,
+            card_rating: block.settings.rating,
+            card_reviews_count: block.settings.reviews_count,
+            card_price: block.settings.price,
+            card_compare_price: block.settings.compare_price,
+            card_discount: block.settings.discount_tag,
+            card_categories: block.settings.category,
+            card_delay_class: delay_class
+          %}
+        {%- endfor -%}
+      {%- else -%}
+        <!-- Fallback 8 Prototype Default Cards -->
+        {% render 'card-product-purelane',
+          card_title: 'Tap cleaner & limescale remover',
+          card_badge: 'Best seller',
+          card_rating: '4.8',
+          card_reviews_count: '237',
+          card_price: '₹200',
+          card_compare_price: '₹299',
+          card_discount: '33% off',
+          card_categories: 'bathroom kitchen',
+          card_delay_class: ''
+        %}
+        {% render 'card-product-purelane',
+          card_title: 'Kitchen cleaner, foaming',
+          card_badge: 'Best seller',
+          card_rating: '4.8',
+          card_reviews_count: '254',
+          card_price: '₹200',
+          card_compare_price: '₹299',
+          card_discount: '33% off',
+          card_categories: 'kitchen',
+          card_delay_class: 'rv-d1'
+        %}
+        {% render 'card-product-purelane',
+          card_title: 'Copper, bronze & brass cleaner',
+          card_badge: 'Top rated',
+          card_rating: '4.8',
+          card_reviews_count: '231',
+          card_price: '₹200',
+          card_compare_price: '₹299',
+          card_discount: '33% off',
+          card_categories: 'kitchen',
+          card_delay_class: 'rv-d2'
+        %}
+        {% render 'card-product-purelane',
+          card_title: 'Washing machine cleaner & descaler (Concentrated Formula for Front & Top Loaders)',
+          card_badge: 'New',
+          card_rating: '4.8',
+          card_reviews_count: '183',
+          card_price: '₹200',
+          card_compare_price: '₹299',
+          card_discount: '33% off',
+          card_categories: 'laundry',
+          card_delay_class: 'rv-d3'
+        %}
+        {% render 'card-product-purelane',
+          card_title: 'Natural toilet bowl cleaner gel',
+          card_badge: 'Sold out',
+          card_rating: '4.8',
+          card_reviews_count: '237',
+          card_price: '₹180',
+          card_compare_price: '₹249',
+          card_categories: 'bathroom',
+          card_delay_class: ''
+        %}
+        {% render 'card-product-purelane',
+          card_title: 'Ultra-gentle plant dishwash gel',
+          card_badge: 'Top rated',
+          card_rating: '4.8',
+          card_reviews_count: '254',
+          card_price: '₹220',
+          card_compare_price: '₹299',
+          card_categories: 'kitchen',
+          card_delay_class: 'rv-d1'
+        %}
+        {% render 'card-product-purelane',
+          card_title: 'Natural laundry detergent liquid',
+          card_badge: 'Top rated',
+          card_rating: '4.8',
+          card_reviews_count: '231',
+          card_price: '₹350',
+          card_compare_price: '₹450',
+          card_categories: 'laundry',
+          card_delay_class: 'rv-d2'
+        %}
+        {% render 'card-product-purelane',
+          card_title: 'Botanical handwash gel',
+          card_badge: 'New',
+          card_rating: '4.8',
+          card_reviews_count: '190',
+          card_price: '₹190',
+          card_compare_price: '₹250',
+          card_categories: 'bathroom floor',
+          card_delay_class: 'rv-d3'
+        %}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Purelane Shop",
+  "tag": "section",
+  "class": "purelane-shop-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow Text",
+      "default": "Bestsellers"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Section Heading",
+      "default": "Loved by 30,000 homes"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Shopify Store Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 4,
+      "max": 12,
+      "step": 1,
+      "default": 8,
+      "label": "Products to Display"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product_card",
+      "name": "Custom Product Card",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Shopify Product"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Product Title",
+          "default": "Tap cleaner & limescale remover"
+        },
+        {
+          "type": "text",
+          "id": "badge",
+          "label": "Badge Tag",
+          "default": "Best seller"
+        },
+        {
+          "type": "text",
+          "id": "category",
+          "label": "Categories (space-separated: kitchen bathroom laundry floor)",
+          "default": "bathroom kitchen"
+        },
+        {
+          "type": "text",
+          "id": "rating",
+          "label": "Rating Score",
+          "default": "4.8"
+        },
+        {
+          "type": "text",
+          "id": "reviews_count",
+          "label": "Reviews Count",
+          "default": "237"
+        },
+        {
+          "type": "text",
+          "id": "price",
+          "label": "Display Price",
+          "default": "₹200"
+        },
+        {
+          "type": "text",
+          "id": "compare_price",
+          "label": "Display Compare At Price",
+          "default": "₹299"
+        },
+        {
+          "type": "text",
+          "id": "discount_tag",
+          "label": "Discount Tag",
+          "default": "33% off"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Purelane Shop Grid",
+      "blocks": [
+        {
+          "type": "product_card",
+          "settings": {
+            "title": "Tap cleaner & limescale remover",
+            "badge": "Best seller",
+            "category": "bathroom kitchen",
+            "price": "₹200",
+            "compare_price": "₹299",
+            "discount_tag": "33% off"
+          }
+        },
+        {
+          "type": "product_card",
+          "settings": {
+            "title": "Kitchen cleaner, foaming",
+            "badge": "Best seller",
+            "category": "kitchen",
+            "price": "₹200",
+            "compare_price": "₹299",
+            "discount_tag": "33% off"
+          }
+        },
+        {
+          "type": "product_card",
+          "settings": {
+            "title": "Copper, bronze & brass cleaner",
+            "badge": "Top rated",
+            "category": "kitchen",
+            "price": "₹200",
+            "compare_price": "₹299",
+            "discount_tag": "33% off"
+          }
+        },
+        {
+          "type": "product_card",
+          "settings": {
+            "title": "Washing machine cleaner & descaler (Concentrated Formula for Front & Top Loaders)",
+            "badge": "New",
+            "category": "laundry",
+            "price": "₹200",
+            "compare_price": "₹299",
+            "discount_tag": "33% off"
+          }
+        },
+        {
+          "type": "product_card",
+          "settings": {
+            "title": "Natural toilet bowl cleaner gel",
+            "badge": "Sold out",
+            "category": "bathroom",
+            "price": "₹180",
+            "compare_price": "₹249"
+          }
+        },
+        {
+          "type": "product_card",
+          "settings": {
+            "title": "Ultra-gentle plant dishwash gel",
+            "badge": "Top rated",
+            "category": "kitchen",
+            "price": "₹220",
+            "compare_price": "₹299"
+          }
+        },
+        {
+          "type": "product_card",
+          "settings": {
+            "title": "Natural laundry detergent liquid",
+            "badge": "Top rated",
+            "category": "laundry",
+            "price": "₹350",
+            "compare_price": "₹450"
+          }
+        },
+        {
+          "type": "product_card",
+          "settings": {
+            "title": "Botanical handwash gel",
+            "badge": "New",
+            "category": "bathroom floor",
+            "price": "₹190",
+            "compare_price": "₹250"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

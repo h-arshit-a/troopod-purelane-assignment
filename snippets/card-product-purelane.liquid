@@ -1,0 +1,133 @@
+{% comment %}
+  Purelane Product Card Snippet
+  Reusable 1:1 Purelane product card component extending Dawn architecture
+{% endcomment %}
+
+{%- liquid
+  assign card_product = product_card_product
+  assign delay_class = card_delay_class | default: ''
+  
+  assign badge_text = card_badge | default: ''
+  if card_product != blank
+    if card_product.available == false
+      assign badge_text = 'Sold out'
+    elsif card_product.tags contains 'Best seller' or card_product.tags contains 'bestseller'
+      assign badge_text = 'Best seller'
+    elsif card_product.tags contains 'Top rated'
+      assign badge_text = 'Top rated'
+    elsif card_product.tags contains 'New'
+      assign badge_text = 'New'
+    endif
+  endif
+
+  # Categories calculation from product tags / collection
+  assign categories_string = card_categories | default: ''
+  if card_product != blank and categories_string == blank
+    assign tags_joined = card_product.tags | join: ' ' | downcase
+    assign categories_string = tags_joined
+  endif
+-%}
+
+<article
+  class="glass card rv {{ delay_class }}"
+  data-product-category="{{ categories_string | downcase | escape }}"
+>
+  <div class="shot">
+    {%- if badge_text != blank -%}
+      <span class="pill {% if badge_text == 'Sold out' %}sold-out-pill{% endif %}">
+        {{ badge_text | escape }}
+      </span>
+    {%- endif -%}
+
+    <a href="{{ card_product.url | default: '#shop' }}" class="card-img-link" tabindex="-1">
+      {%- if card_product != blank and card_product.featured_image != blank -%}
+        <img
+          src="{{ card_product.featured_image | image_url: width: 400 }}"
+          alt="{{ card_product.featured_image.alt | default: card_product.title | escape }}"
+          loading="lazy"
+          width="130"
+          height="200"
+          class="card-prod-img"
+        >
+      {%- else -%}
+        <!-- Purelane Fallback SVG Container -->
+        <div class="card-placeholder-svg" aria-label="{{ card_product.title | default: 'Purelane Product' | escape }}">
+          <svg viewBox="0 0 130 200" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="gTAPb-fallback" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0" stop-color="#ffffff" stop-opacity=".15"/>
+                <stop offset=".22" stop-color="#ffffff" stop-opacity=".45"/>
+                <stop offset=".5" stop-color="#dff3e4" stop-opacity=".12"/>
+                <stop offset="1" stop-color="#9fc7b4" stop-opacity=".35"/>
+              </linearGradient>
+              <linearGradient id="gTAPl-fallback" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#04756e"/>
+                <stop offset=".5" stop-color="#4b3a8f"/>
+                <stop offset="1" stop-color="#013f3d"/>
+              </linearGradient>
+            </defs>
+            <ellipse cx="65" cy="190" rx="38" ry="7" fill="#01201c" opacity=".5"/>
+            <rect x="28" y="86" width="74" height="92" rx="18" fill="url(#gTAPb-fallback)" stroke="rgba(255,255,255,.4)" stroke-width="1.4"/>
+            <rect x="31" y="104" width="68" height="66" rx="6" fill="url(#gTAPl-fallback)"/>
+            <text x="65" y="132" text-anchor="middle" fill="#faf7fd" font-family="Outfit, sans-serif" font-size="8.6" font-weight="800" letter-spacing=".7">PURELANE</text>
+            <text x="65" y="148" text-anchor="middle" fill="#ece6f7" font-family="Inter, sans-serif" font-size="6.2" font-weight="700" letter-spacing="1.1">{{ card_product.title | default: 'HOMECARE' | truncate: 14 | uppercase }}</text>
+          </svg>
+        </div>
+      {%- endif -%}
+    </a>
+  </div>
+
+  <h4>
+    <a href="{{ card_product.url | default: '#shop' }}" class="card-title-link">
+      {{ card_product.title | default: card_title | default: 'Purelane Product' | escape }}
+    </a>
+  </h4>
+
+  <div class="rate">
+    <b>★ {{ card_product.metafields.reviews.rating.value | default: card_rating | default: '4.8' }}</b>
+    · {{ card_product.metafields.reviews.rating_count.value | default: card_reviews_count | default: '237' }} reviews
+  </div>
+
+  <div class="pr">
+    {%- if card_product != blank -%}
+      <strong>{{ card_product.price | money }}</strong>
+      {%- if card_product.compare_at_price > card_product.price -%}
+        <s>{{ card_product.compare_at_price | money }}</s>
+        {%- assign savings = card_product.compare_at_price | minus: card_product.price | times: 100.0 | divided_by: card_product.compare_at_price | round -%}
+        <em>{{ savings }}% off</em>
+      {%- endif -%}
+    {%- else -%}
+      <strong>{{ card_price | default: '₹200' }}</strong>
+      {%- if card_compare_price != blank -%}
+        <s>{{ card_compare_price }}</s>
+        <em>{{ card_discount | default: '33% off' }}</em>
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+
+  {%- if card_product != blank -%}
+    {%- if card_product.available -%}
+      <product-form class="product-form">
+        {%- form 'product', card_product, id: card_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+          <input type="hidden" name="id" value="{{ card_product.selected_or_first_available_variant.id }}">
+          <button
+            type="submit"
+            name="add"
+            class="btn btn-ghost btn-sm"
+            aria-label="Add {{ card_product.title | escape }} to cart"
+          >
+            Add to cart
+          </button>
+        {%- endform -%}
+      </product-form>
+    {%- else -%}
+      <button class="btn btn-ghost btn-sm" disabled aria-disabled="true">
+        Sold out
+      </button>
+    {%- endif -%}
+  {%- else -%}
+    <button class="btn btn-ghost btn-sm">
+      Add to cart
+    </button>
+  {%- endif -%}
+</article>
