@@ -113,7 +113,8 @@
           <button
             type="submit"
             name="add"
-            class="btn btn-ghost btn-sm"
+            class="btn btn-ghost btn-sm purelane-add-to-cart-btn"
+            data-variant-id="{{ card_product.selected_or_first_available_variant.id }}"
             aria-label="Add {{ card_product.title | escape }} to cart"
           >
             Add to cart
@@ -126,8 +127,17 @@
       </button>
     {%- endif -%}
   {%- else -%}
-    <button class="btn btn-ghost btn-sm">
-      Add to cart
-    </button>
+    <form action="/cart/add" method="post" enctype="multipart/form-data" class="form" data-type="add-to-cart-form">
+      <input type="hidden" name="id" value="">
+      <button
+        type="submit"
+        name="add"
+        class="btn btn-ghost btn-sm purelane-add-to-cart-btn"
+        aria-label="Add {{ card_title | default: 'Purelane Product' | escape }} to cart"
+      >
+        Add to cart
+      </button>
+    </form>
   {%- endif -%}
 </article>
+

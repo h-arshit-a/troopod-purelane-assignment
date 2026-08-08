@@ -281,7 +281,7 @@
       });
     }
 
-    /* ---------- 10. Cart Badge Synchronization ---------- */
+    /* ---------- 10. Universal AJAX Add to Cart Engine & Cart Badge Synchronization ---------- */
     function updateCartBadge() {
       fetch('/cart.js')
         .then(function (res) { return res.json(); })
@@ -296,12 +296,104 @@
 
     updateCartBadge();
 
-    // Listen to AJAX cart submissions
+    function executeAddToCart(variantId, btnElement) {
+      var origText = btnElement ? btnElement.innerHTML : '';
+      if (btnElement) {
+        btnElement.disabled = true;
+        btnElement.innerHTML = 'Adding...';
+      }
+
+      var formData = {
+        items: [{ id: parseInt(variantId, 10), quantity: 1 }],
+        sections: 'cart-drawer,cart-icon-bubble'
+      };
+
+      fetch('/cart/add.js', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      })
+      .then(function (res) { return res.json(); })
+      .then(function (data) {
+        updateCartBadge();
+
+        // Update Dawn Cart Drawer DOM if sections HTML returned
+        if (data.sections && data.sections['cart-drawer']) {
+          var cartDrawerEl = document.querySelector('cart-drawer');
+          if (cartDrawerEl) {
+            var parsedHtml = new DOMParser().parseFromString(data.sections['cart-drawer'], 'text/html');
+            var innerHtml = parsedHtml.querySelector('.drawer__inner');
+            if (innerHtml && cartDrawerEl.querySelector('.drawer__inner')) {
+              cartDrawerEl.querySelector('.drawer__inner').replaceWith(innerHtml);
+            }
+          }
+        }
+
+        // Open Dawn Cart Drawer
+        var cartDrawer = document.querySelector('cart-drawer');
+        if (cartDrawer && typeof cartDrawer.open === 'function') {
+          cartDrawer.open();
+        } else if (cartDrawer) {
+          cartDrawer.classList.add('active');
+        }
+
+        if (btnElement) {
+          btnElement.disabled = false;
+          btnElement.innerHTML = 'Added! ✓';
+          setTimeout(function () {
+            btnElement.innerHTML = origText || 'Add to cart';
+          }, 2000);
+        }
+      })
+      .catch(function () {
+        if (btnElement) {
+          btnElement.disabled = false;
+          btnElement.innerHTML = origText || 'Add to cart';
+        }
+      });
+    }
+
+    function handleAddToCartClick(e) {
+      var btn = e.target ? e.target.closest('.purelane-add-to-cart-btn, [data-add-to-cart], button[name="add"]') : null;
+      if (!btn) return;
+
+      if (e.preventDefault) e.preventDefault();
+      var variantId = btn.getAttribute('data-variant-id') || btn.getAttribute('data-add-to-cart');
+
+      var form = btn.closest('form');
+      if (!variantId && form && form.id && form.id.value) {
+        variantId = form.id.value;
+      }
+
+      if (!variantId) {
+        // Fallback: fetch store products.json and add first available variant
+        fetch('/products.json?limit=1')
+          .then(function (res) { return res.json(); })
+          .then(function (data) {
+            if (data.products && data.products.length > 0 && data.products[0].variants.length > 0) {
+              executeAddToCart(data.products[0].variants[0].id, btn);
+            }
+          })
+          .catch(function () {});
+        return;
+      }
+
+      executeAddToCart(variantId, btn);
+    }
+
+    document.addEventListener('click', handleAddToCartClick);
     document.addEventListener('submit', function (e) {
       if (e.target && (e.target.matches('[data-type="add-to-cart-form"]') || e.target.getAttribute('action') === '/cart/add')) {
-        setTimeout(updateCartBadge, 800);
+        e.preventDefault();
+        var form = e.target;
+        var btn = form.querySelector('button[type="submit"]') || form.querySelector('button');
+        handleAddToCartClick({ target: btn || form, preventDefault: function () {} });
       }
     });
+
 
     // Trigger initial frame
     frame();

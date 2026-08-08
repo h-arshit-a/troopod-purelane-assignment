@@ -145,17 +145,20 @@
                 {{ section.settings.fine_print | default: 'Inclusive of all taxes · COD available' | escape }}
               </div>
 
-              <a
-                href="{{ block.settings.btn_link | default: '#bundles' }}"
-                class="btn {% if is_hero %}btn-primary{% else %}btn-ghost{% endif %}"
+              <button
+                type="button"
+                class="btn {% if is_hero %}btn-primary{% else %}btn-ghost{% endif %} purelane-add-to-cart-btn"
+                data-variant-id="{{ featured_prod.selected_or_first_available_variant.id }}"
+                aria-label="Add {{ block.settings.title | escape }} to cart"
               >
                 {{ block.settings.btn_label | default: 'Shop bundle' | escape }}
                 <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewBox="0 0 24 24">
                   <path d="M5 12h13m-5-6 6 6-6 6"></path>
                 </svg>
-              </a>
+              </button>
             </div>
           </article>
+
         {%- endfor -%}
       {%- endif -%}
     </div>
