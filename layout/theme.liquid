@@ -305,6 +305,12 @@
       <script src="{{ 'localization-form.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    {{ 'purelane.css' | asset_url | stylesheet_tag }}
+    <script src="{{ 'purelane.js' | asset_url }}" defer="defer"></script>
+
     {%- if settings.predictive_search_enabled -%}
       <link
         rel="stylesheet"
@@ -325,6 +331,92 @@
     <a class="skip-to-content-link button visually-hidden" href="#MainContent">
       {{ 'accessibility.skip_to_text' | t }}
     </a>
+
+    <!-- Purelane Deterministic Background Scenes & Water Caustics -->
+    <div id="scenes" class="scenes" data-d="1">
+      <div class="scene s1 on"></div>
+      <div class="scene s2"></div>
+      <div class="scene s3"></div>
+      <div class="scene s4"></div>
+
+      <div id="water" class="water">
+        <div class="wl wl-a">
+          <svg class="sv" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="cg" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#fff" stop-opacity="0.35"/>
+                <stop offset="60%" stop-color="#20c4b3" stop-opacity="0.15"/>
+                <stop offset="100%" stop-color="#6b38fb" stop-opacity="0.0"/>
+              </linearGradient>
+              <filter id="wf" x="-20%" y="-20%" width="140%" height="140%">
+                <feTurbulence type="fractalNoise" baseFrequency="0.012 0.024" numOctaves="3" result="noise"/>
+                <feDisplacementMap in="SourceGraphic" in2="noise" scale="18" xChannelSelector="R" yChannelSelector="G"/>
+              </filter>
+            </defs>
+            <rect width="100" height="100" fill="url(#cg)" filter="url(#wf)"/>
+          </svg>
+        </div>
+
+        <div class="wl wl-b">
+          <svg class="sv" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <defs>
+              <filter id="wf2" x="-20%" y="-20%" width="140%" height="140%">
+                <feTurbulence type="turbulence" baseFrequency="0.02 0.01" numOctaves="2" result="noise2"/>
+                <feDisplacementMap in="SourceGraphic" in2="noise2" scale="12" xChannelSelector="R" yChannelSelector="G"/>
+              </filter>
+            </defs>
+            <rect width="100" height="100" fill="url(#cg)" filter="url(#wf2)"/>
+          </svg>
+        </div>
+
+        <div class="wl wl-c">
+          <svg class="sv" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="sg" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#ffffff" stop-opacity="0.22"/>
+                <stop offset="100%" stop-color="#ffffff" stop-opacity="0.0"/>
+              </linearGradient>
+            </defs>
+            <rect width="100" height="100" fill="url(#sg)"/>
+          </svg>
+        </div>
+
+        <div class="wl wl-s">
+          <svg class="sv" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="sf" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="#20c4b3" stop-opacity="0.25"/>
+                <stop offset="50%" stop-color="#ffffff" stop-opacity="0.30"/>
+                <stop offset="100%" stop-color="#6b38fb" stop-opacity="0.0"/>
+              </linearGradient>
+              <filter id="sfw">
+                <feTurbulence type="fractalNoise" baseFrequency="0.015 0.03" numOctaves="2" result="n"/>
+                <feDisplacementMap in="SourceGraphic" in2="n" scale="8"/>
+              </filter>
+            </defs>
+            <rect width="100" height="100" fill="url(#sf)" filter="url(#sfw)"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="bub">
+        <span style="--x:12%;--s:9px;--dur:14s;--dly:0s;--drift:24px"></span>
+        <span style="--x:28%;--s:14px;--dur:18s;--dly:3s;--drift:-30px"></span>
+        <span style="--x:45%;--s:7px;--dur:12s;--dly:1.5s;--drift:16px"></span>
+        <span style="--x:63%;--s:18px;--dur:22s;--dly:5s;--drift:-22px"></span>
+        <span style="--x:79%;--s:11px;--dur:16s;--dly:2s;--drift:28px"></span>
+        <span style="--x:91%;--s:8px;--dur:13s;--dly:4s;--drift:-14px"></span>
+      </div>
+      <div class="vig"></div>
+    </div>
+
+    <!-- Purelane Fixed Progress Rail -->
+    <nav class="rail" aria-label="Page section progress">
+      <a href="#combos" class="on" title="Combos" aria-label="Go to Combos"></a>
+      <a href="#bundles" title="Bundles" aria-label="Go to Bundles"></a>
+      <a href="#shop" title="Shop" aria-label="Go to Shop"></a>
+      <a href="#reviews" title="Reviews" aria-label="Go to Reviews"></a>
+    </nav>
 
     {%- if settings.cart_type == 'drawer' -%}
       {%- render 'cart-drawer' -%}
