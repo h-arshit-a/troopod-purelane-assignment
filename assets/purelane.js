@@ -416,9 +416,17 @@
       }
 
       if (!variantId || variantId === 'blank') {
-        alert('Please assign a product to this block in Shopify Theme Editor.');
+        var origText = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = 'Select Product';
+        setTimeout(function () {
+          btn.disabled = false;
+          btn.innerHTML = origText;
+        }, 2000);
+        console.warn('Purelane Add to Cart: No variant ID found on element or form.');
         return;
       }
+
 
       executeAddToCart(variantId, btn);
     }

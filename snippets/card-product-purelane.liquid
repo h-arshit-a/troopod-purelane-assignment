@@ -5,12 +5,18 @@
 
 {%- liquid
   assign card_product = product_card_product
-  if card_product == blank and collections.all.products.size > 0
-    assign fallback_idx = card_index | default: 0 | modulo: collections.all.products.size
-    assign card_product = collections.all.products[fallback_idx]
+  if card_product == blank
+    assign all_prods = collections.all.products
+    if all_prods == blank or all_prods.size == 0
+      assign all_prods = collections['all'].products
+    endif
+    if all_prods.size > 0
+      assign fallback_idx = card_index | default: 0 | modulo: all_prods.size
+      assign card_product = all_prods[fallback_idx]
+    endif
   endif
 
-  assign active_variant = card_product.selected_or_first_available_variant
+  assign active_variant = card_product.selected_or_first_available_variant | default: card_product.variants.first
   assign delay_class = card_delay_class | default: ''
   
   assign badge_text = card_badge | default: ''
