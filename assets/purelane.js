@@ -281,6 +281,28 @@
       });
     }
 
+    /* ---------- 10. Cart Badge Synchronization ---------- */
+    function updateCartBadge() {
+      fetch('/cart.js')
+        .then(function (res) { return res.json(); })
+        .then(function (cart) {
+          var dots = document.querySelectorAll('.navtools .dot, #hdr .dot, [data-cart-count]');
+          dots.forEach(function (d) {
+            d.textContent = cart.item_count || '0';
+          });
+        })
+        .catch(function () {});
+    }
+
+    updateCartBadge();
+
+    // Listen to AJAX cart submissions
+    document.addEventListener('submit', function (e) {
+      if (e.target && (e.target.matches('[data-type="add-to-cart-form"]') || e.target.getAttribute('action') === '/cart/add')) {
+        setTimeout(updateCartBadge, 800);
+      }
+    });
+
     // Trigger initial frame
     frame();
   }
@@ -301,3 +323,4 @@
     });
   }
 })();
+

@@ -1,24 +1,19 @@
 {
-  "name": "t:sections.footer.name",
+  "name": "Footer",
   "type": "footer",
   "sections": {
     "footer": {
-      "type": "footer",
-      "blocks": {},
-      "block_order": [],
+      "type": "footer-purelane",
       "settings": {
-        "color_scheme": "scheme-1",
-        "newsletter_enable": true,
-        "newsletter_heading": "Subscribe to our emails",
-        "enable_follow_on_shop": true,
-        "show_social": true,
-        "enable_country_selector": true,
-        "enable_language_selector": true,
-        "payment_enable": true,
-        "show_policy": true,
-        "margin_top": 0,
-        "padding_top": 36,
-        "padding_bottom": 36
+        "tagline": "Clean, simply",
+        "brand_description": "Effective cleaning, powered by nature. Made for Indian homes since day one.",
+        "col_2_heading": "Shop",
+        "col_3_heading": "About",
+        "col_4_heading": "Get in touch",
+        "email": "hello@purelane.com",
+        "phone": "+91 9930 123 234",
+        "company_info": "Purelane Eco Products Pvt Ltd",
+        "copyright_text": "© 2026 Purelane Eco Products Private Limited"
       }
     }
   },
